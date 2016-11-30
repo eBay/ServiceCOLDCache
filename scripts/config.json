@@ -1,0 +1,6 @@
+{
+	"enableCache" : true,
+	"maxCount": 10000, //max number of cache items
+	"timeToLive": 259200 // unit seconds, time to live for a cache item
+//	"cacheDir": "./cache" //where to put the cache file.
+}

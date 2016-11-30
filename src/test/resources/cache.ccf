@@ -1,0 +1,51 @@
+# DEFAULT CACHE REGION
+jcs.default=DC
+jcs.default.cacheattributes=org.apache.commons.jcs.engine.CompositeCacheAttributes
+jcs.default.cacheattributes.MaxObjects=1000
+jcs.default.cacheattributes.MemoryCacheName=org.apache.commons.jcs.engine.memory.lru.LRUMemoryCache
+jcs.default.cacheattributes.UseMemoryShrinker=false
+jcs.default.elementattributes=org.apache.commons.jcs.engine.ElementAttributes
+jcs.default.elementattributes.IsEternal=false
+jcs.default.elementattributes.MaxLife=2592000
+jcs.default.elementattributes.IdleTime=1800
+jcs.default.elementattributes.IsSpool=true
+jcs.default.elementattributes.IsRemote=false
+jcs.default.elementattributes.IsLateral=false
+
+# PRE-DEFINED CACHE REGIONS
+jcs.region.proxyCache=DC
+jcs.region.proxyCache.cacheattributes=org.apache.commons.jcs.engine.CompositeCacheAttributes
+jcs.region.proxyCache.cacheattributes.MaxObjects=5000
+jcs.region.proxyCache.cacheattributes.MemoryCacheName=org.apache.commons.jcs.engine.memory.lru.LRUMemoryCache
+jcs.region.proxyCache.cacheattributes.UseMemoryShrinker=false
+jcs.region.proxyCache.cacheattributes.MaxMemoryIdleTimeSeconds=60
+jcs.region.proxyCache.cacheattributes.ShrinkerIntervalSeconds=30
+jcs.region.proxyCache.cacheattributes.MaxSpoolPerRun=500
+jcs.region.proxyCache.cacheattributes.DiskUsagePatternName=UPDATE
+jcs.region.proxyCache.elementattributes=org.apache.commons.jcs.engine.ElementAttributes
+jcs.region.proxyCache.elementattributes.IsEternal=false
+jcs.region.proxyCache.elementattributes.MaxLife=2592000
+jcs.region.proxyCache.elementattributes.IdleTime=2592000
+jcs.region.proxyCache.elementattributes.IsSpool=true
+jcs.region.proxyCache.elementattributes.IsRemote=false
+jcs.region.proxyCache.elementattributes.IsLateral=false
+
+# AVAILABLE AUXILIARY CACHES
+jcs.auxiliary.DC=org.apache.commons.jcs.auxiliary.disk.indexed.IndexedDiskCacheFactory
+jcs.auxiliary.DC.attributes=org.apache.commons.jcs.auxiliary.disk.indexed.IndexedDiskCacheAttributes
+jcs.auxiliary.DC.attributes.DiskPath=./cache
+jcs.auxiliary.DC.attributes.MaxPurgatorySize=1000
+jcs.auxiliary.DC.attributes.MaxKeySize=1000000
+jcs.auxiliary.DC.attributes.MaxRecycleBinSize=5000
+jcs.auxiliary.DC.attributes.OptimizeAtRemoveCount=300000
+jcs.auxiliary.DC.attributes.OptimizeOnShutdown=true
+jcs.auxiliary.DC.attributes.ShutdownSpoolTimeLimit=60
+jcs.auxiliary.DC.attributes.EventQueueType=POOLED
+jcs.auxiliary.DC.attributes.EventQueuePoolName=disk_cache_event_queue
+
+# Disk Cache Event Queue Pool
+thread_pool.disk_cache_event_queue.useBoundary=false
+thread_pool.remote_cache_client.maximumPoolSize=15
+thread_pool.disk_cache_event_queue.minimumPoolSize=1
+thread_pool.disk_cache_event_queue.keepAliveTime=3500
+thread_pool.disk_cache_event_queue.startUpSize=1

@@ -1,0 +1,28 @@
+{
+	"proxyPort": 32876,
+	"enableCache": true,
+	"maxCount": 5000,
+	"timeToLive": 259200,
+	// "cacheDir": "./cache",
+	// "includes": [{
+	// "uri": "*"
+	// }],
+	// "exculdes": [],
+
+	// advanced options
+	"adminPort": 55321,
+	"debugPort": 32877,
+	"debugInfo": true,
+	"threadPool.acceptorThreads": 15,
+	"threadPool.clientToProxyThreads": 50,
+	"threadPool.proxyToServerThreads": 50,
+	"update": "LRU",
+	"jcsCache.configFile": "cache.ccf",
+	"jcsCache.saveCheck.interval": 10, // 10s
+	"nettyRequestProxyFilter.maxSendBufferSize": 104857600, // 100m
+	"debugManager.maxDebugThreads": 10,
+	"cacheStats.verifiedResultThreshold": 100,
+	"debugManager.debugEnabled": false,
+	"requestKeyGenerator.skipHeaders": ["DATE"],
+	"trackerClient.enabled" : false
+}

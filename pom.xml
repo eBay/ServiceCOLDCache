@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ebayopensource.scc</groupId>
+	<artifactId>service-cold-cache</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Service COLD Cache</name>
+	<description>Service COLD Cache for cold cache</description>
+
+	<properties>
+		<distribution-folder>dist</distribution-folder>
+		<distribution-archive>dist.zip</distribution-archive>
+		<distribution-jar>scc.jar</distribution-jar>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.ganskef</groupId>
+			<artifactId>littleproxy-mitm</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-jcs-core</artifactId>
+			<version>2.0-beta-1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.0.23.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>3.0.22</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.2.6</version>
+		</dependency>
+
+		<!-- testing -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.5.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.5.5</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mockito</groupId>
+					<artifactId>mockito-all</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.19</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>org.ebayopensource.scc.Launcher</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<delete dir="${project.build.directory}/${distribution-folder}" />
+								<copy
+									file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar"
+									tofile="${project.build.directory}/${distribution-folder}/${distribution-jar}"
+									overwrite="true" />
+								<copy file="${project.build.outputDirectory}/version.txt"
+									todir="${project.build.directory}/${distribution-folder}"
+									overwrite="true" />
+								<copy todir="${project.build.directory}/${distribution-folder}"
+									overwrite="true">
+									<fileset dir="${project.basedir}/scripts">
+										<!-- config file -->
+										<include name="config.json" />
+										<!-- bat script -->
+										<include name="serviceCache.bat" />
+										<include name="startup.bat" />
+										<include name="stop.bat" />
+										<include name="setenv.bat" />
+										<!-- shell script -->
+										<include name="serviceCache.sh" />
+										<include name="startup.sh" />
+										<include name="stop.sh" />
+										<include name="setenv.sh" />
+									</fileset>
+								</copy>
+								<chmod dir="${project.build.directory}/${distribution-folder}"
+									includes="**/*.sh" perm="+x" />
+								<zip destfile="${project.build.directory}/${distribution-archive}">
+									<zipfileset filemode="644"
+										dir="${project.build.directory}/${distribution-folder}"
+										includes="**/*" excludes="**/*.sh" />
+									<zipfileset filemode="755"
+										dir="${project.build.directory}/${distribution-folder}"
+										includes="**/*.sh" />
+								</zip>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

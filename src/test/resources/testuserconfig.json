@@ -1,0 +1,27 @@
+{
+	description : "testConfig",
+	"jcsCache.ConfigFile": "/testcache.ccf",
+	maxCount: 5000, //max number of cache items
+	timeToLive: 100, // unit seconds, time to live for a cache item
+	update: 'LRU', // cache update policy, LRU is Least Recently Used policy
+	cacheDir: './testcache', //where to put the cache file.
+	enableCache : true,
+	excludes: [{
+		'pattern': 'http://test1.ebay.com/v1/s1',
+		'method': 'POST'
+	}, {
+		'pattern': 'http://test2.ebay.com/v1/s1?poolname=*',
+		'method': '*'
+	}, ],
+	includes: [{
+		'pattern': 'http://test2.ebay.com/v1/s1?poolname=r1testfm'
+	}],
+	"uriMatchOnly": [{
+		"uri": "http://test.ebay.com/v1/s1",
+		"method": "*"
+	},{
+		"uri": "http://test.ebay.com/v1/s2",
+		"method": "Post"
+	}]
+
+}
