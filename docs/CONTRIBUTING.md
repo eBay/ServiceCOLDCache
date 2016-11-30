@@ -38,7 +38,7 @@ The following guidelines apply to all contributors.
 
 ### Issues Tracking
 
-* Use [JIRA](https://jirap.corp.ebay.com/projects/RADE) to tracking issues, new feature, enhancements.
+* Use [GitHub Issues](https://github.com/eBay/ServiceCOLDCache/issues) to tracking issues, new feature, enhancements.
 
 
   
