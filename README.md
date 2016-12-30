@@ -10,8 +10,8 @@ The Service COLD cache is a CML tool that is designed to run on a developer work
 
 ##Downloads
 
-* Download [Latest Release](Downloads/)
-* You can also find each released versions [HERE](Downloads/)
+* Download [Here](product/ServiceCOLDCache.zip)
+
 
 ##Documentation
 
