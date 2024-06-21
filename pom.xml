@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-utils</artifactId>
-			<version>3.0.22</version>
+			<version>3.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -141,40 +141,29 @@
 						<phase>package</phase>
 						<configuration>
 							<target>
-								<delete dir="${project.build.directory}/${distribution-folder}" />
-								<copy
-									file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar"
-									tofile="${project.build.directory}/${distribution-folder}/${distribution-jar}"
-									overwrite="true" />
-								<copy file="${project.build.outputDirectory}/version.txt"
-									todir="${project.build.directory}/${distribution-folder}"
-									overwrite="true" />
-								<copy todir="${project.build.directory}/${distribution-folder}"
-									overwrite="true">
+								<delete dir="${project.build.directory}/${distribution-folder}"/>
+								<copy file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar" tofile="${project.build.directory}/${distribution-folder}/${distribution-jar}" overwrite="true"/>
+								<copy file="${project.build.outputDirectory}/version.txt" todir="${project.build.directory}/${distribution-folder}" overwrite="true"/>
+								<copy todir="${project.build.directory}/${distribution-folder}" overwrite="true">
 									<fileset dir="${project.basedir}/scripts">
 										<!-- config file -->
-										<include name="config.json" />
+										<include name="config.json"/>
 										<!-- bat script -->
-										<include name="serviceCache.bat" />
-										<include name="startup.bat" />
-										<include name="stop.bat" />
-										<include name="setenv.bat" />
+										<include name="serviceCache.bat"/>
+										<include name="startup.bat"/>
+										<include name="stop.bat"/>
+										<include name="setenv.bat"/>
 										<!-- shell script -->
-										<include name="serviceCache.sh" />
-										<include name="startup.sh" />
-										<include name="stop.sh" />
-										<include name="setenv.sh" />
+										<include name="serviceCache.sh"/>
+										<include name="startup.sh"/>
+										<include name="stop.sh"/>
+										<include name="setenv.sh"/>
 									</fileset>
 								</copy>
-								<chmod dir="${project.build.directory}/${distribution-folder}"
-									includes="**/*.sh" perm="+x" />
+								<chmod dir="${project.build.directory}/${distribution-folder}" includes="**/*.sh" perm="+x"/>
 								<zip destfile="${project.build.directory}/${distribution-archive}">
-									<zipfileset filemode="644"
-										dir="${project.build.directory}/${distribution-folder}"
-										includes="**/*" excludes="**/*.sh" />
-									<zipfileset filemode="755"
-										dir="${project.build.directory}/${distribution-folder}"
-										includes="**/*.sh" />
+									<zipfileset filemode="644" dir="${project.build.directory}/${distribution-folder}" includes="**/*" excludes="**/*.sh"/>
+									<zipfileset filemode="755" dir="${project.build.directory}/${distribution-folder}" includes="**/*.sh"/>
 								</zip>
 							</target>
 						</configuration>
